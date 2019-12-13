@@ -1,7 +1,10 @@
 package com.onboarding.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 
@@ -9,6 +12,7 @@ import javax.persistence.Id;
 public class Applicant {
 
 	@Id
+	@GeneratedValue
 	private int applicant_id;
 	
 	@Column(name="firstname")
@@ -22,6 +26,8 @@ public class Applicant {
 	
 	@Column(name="phone_number")
 	private Long phone_number;
+	
+	
 	
 	public int getApplicant_id() {
 		return applicant_id;
@@ -58,6 +64,7 @@ public class Applicant {
 		return "Applicant [applicant_id=" + applicant_id + ", firstname=" + firstname + ", lastname=" + lastname
 				+ ", email=" + email + ", phone_number=" + phone_number + "]";
 	}
+	
 	
 	
 }

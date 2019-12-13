@@ -1,39 +1,39 @@
 package com.onboarding.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.onboarding.model.Applicant;
-import com.onboarding.model.GenerateToken;
 
-import com.onboarding.service.LampRepositoryApplicant;
+import com.onboarding.serviice.ApplicantService;
 
-import org.springframework.mail.SimpleMailMessage;
+
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Controller;
 
 @Controller
 public class OnboardingController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(OnboardingController.class);
 
 	@Autowired
-	LampRepositoryApplicant lampRepository;
+	ApplicantService applicantService;
 	
 	@Autowired
 	JavaMailSender javaMailSender;
 	
-//	@Autowired
-//	ConfirmationToken confirmationToken;
-//	
-//	@Autowired
-//	ConfirmationTokenRepository confirmationTokenRepository;
 	@RequestMapping("/changepassword")
 	public String changePassword() {
 		
 		return "changepassword";
 	}
 	
-	@RequestMapping("/")
+	@RequestMapping("/home")
 	public String register() {
 		
 		return "register";
@@ -44,31 +44,18 @@ public class OnboardingController {
 		return "login";
 	}
 	
-//	@RequestMapping("/register")
-//	public String register() {
-//		
-//		System.out.println("Form not saved");
-//		
-//		System.out.println("Form saved");
-//		return "eConfirm";
-//	}
-	
-	@RequestMapping("/email")
-	public String sendmail(Applicant applicant) {
+	@RequestMapping("/register")
+	public String sendmail(Applicant applicant)
+	{
+		String returnPath = "eConfirm";
+		applicant = applicantService.register(applicant);
+		if(applicant.getApplicant_id() <= 0) {
+			logger.error(applicant.toString() + "not successfully created");
+			returnPath = "";
+		} else {
+			applicantService.sendmail(applicant);
+		}
 		
-		GenerateToken gen=  new GenerateToken();
-
-		
-		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo("akinloluawoseemo@gmail.com");
-		message.setSubject("Email Testing");
-
-		message.setText("Click on the link to confirm your account"+ " " +  "http://localhost:8080/changepassword?token="+gen.genToken());
-
-		
-		javaMailSender.send(message);
-		lampRepository.save(applicant);
-		return "eConfirm";
-		
+		return returnPath;
 	}
 }
