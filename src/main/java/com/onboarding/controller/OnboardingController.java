@@ -33,6 +33,12 @@ public class OnboardingController {
 		return "changepassword";
 	}
 	
+	@RequestMapping("/landing")
+	public String goToLanding() {
+		
+		return "landing";
+	}
+	
 	@RequestMapping("/home")
 	public String register() {
 		

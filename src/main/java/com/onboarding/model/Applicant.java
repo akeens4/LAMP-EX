@@ -27,7 +27,8 @@ public class Applicant {
 	@Column(name="phone_number")
 	private Long phone_number;
 	
-	
+	@Column(name="password")
+	private String password;
 	
 	public int getApplicant_id() {
 		return applicant_id;
@@ -59,11 +60,21 @@ public class Applicant {
 	public void setPhone_number(Long phone_number) {
 		this.phone_number = phone_number;
 	}
+	
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 	@Override
 	public String toString() {
 		return "Applicant [applicant_id=" + applicant_id + ", firstname=" + firstname + ", lastname=" + lastname
-				+ ", email=" + email + ", phone_number=" + phone_number + "]";
+				+ ", email=" + email + ", phone_number=" + phone_number + ", password=" + password + "]";
 	}
+
+	
 	
 	
 	
