@@ -1,4 +1,6 @@
-package com.onboarding.serviice;
+package com.onboarding.service;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -10,7 +12,7 @@ import com.onboarding.model.GenerateToken;
 import com.onboarding.repository.LampApplicantRepository;
 
 @Service
-public class ApplicantService {
+public class ApplicantServiceImpl implements ApplicantService{
 	
 	@Autowired
 	LampApplicantRepository applicantRepository;
@@ -35,10 +37,39 @@ public class ApplicantService {
 		
 		javaMailSender.send(message);
 	}
-	
-	
-	
-	
-	
 
+
+
+	@Override
+	public Applicant saveApplicant(Applicant applicant) {
+		return applicantRepository.save(applicant);
+	}
+
+
+
+	@Override
+	public Applicant updateApplicant(Applicant applicant) {
+		return applicantRepository.saveAndFlush(applicant);
+	}
+
+
+	@Override
+	public List<Applicant> getAllApplicant() {
+		return applicantRepository.findAll();
+	}
+
+
+	@Override
+	public Applicant getEmployee(int applicant_id) {
+//		return applicantRepository.findOne(applicant_id);
+		return null;
+	}
+
+
+
+	@Override
+	public void deleteApplicant(int applicant_id) {
+		applicantRepository.deleteById(applicant_id);
+		
+	}
 }

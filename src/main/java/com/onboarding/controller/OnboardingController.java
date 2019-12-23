@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.onboarding.model.Applicant;
-
-import com.onboarding.serviice.ApplicantService;
-
+import com.onboarding.service.ApplicantServiceImpl;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
@@ -22,7 +20,7 @@ public class OnboardingController {
 	private static final Logger logger = LoggerFactory.getLogger(OnboardingController.class);
 
 	@Autowired
-	ApplicantService applicantService;
+	ApplicantServiceImpl applicantService;
 	
 	@Autowired
 	JavaMailSender javaMailSender;
